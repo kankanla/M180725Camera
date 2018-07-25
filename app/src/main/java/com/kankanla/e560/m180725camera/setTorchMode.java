@@ -2,7 +2,9 @@ package com.kankanla.e560.m180725camera;
 
 import android.annotation.TargetApi;
 import android.hardware.camera2.CameraAccessException;
+import android.hardware.camera2.CameraCharacteristics;
 import android.hardware.camera2.CameraManager;
+import android.hardware.camera2.CaptureRequest;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -13,6 +15,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 public class setTorchMode extends AppCompatActivity {
     private String TAG = "setTorchMode";
@@ -38,6 +41,16 @@ public class setTorchMode extends AppCompatActivity {
     protected void t1() throws CameraAccessException {
         cameraManager = (CameraManager) getSystemService(CAMERA_SERVICE);
         final String[] cameraIdList = cameraManager.getCameraIdList();
+        CameraCharacteristics cameraCharacteristics = cameraManager.getCameraCharacteristics(cameraIdList[0]);
+
+        if (cameraIdList.length == 0) {
+            return;
+        }
+
+        if (!cameraCharacteristics.get(CameraCharacteristics.FLASH_INFO_AVAILABLE)) {
+            Toast.makeText(this, "!FLASH_INFO_AVAILABLE", Toast.LENGTH_SHORT).show();
+            return;
+        }
 
         torchCallback = new CameraManager.TorchCallback() {
             @Override
