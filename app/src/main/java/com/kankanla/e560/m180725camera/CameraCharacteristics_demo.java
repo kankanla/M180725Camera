@@ -5,10 +5,11 @@ import android.hardware.camera2.CameraCharacteristics;
 import android.hardware.camera2.CameraManager;
 import android.hardware.camera2.CameraMetadata;
 import android.os.Build;
+import android.os.Bundle;
 import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.util.Log;
+import android.util.Range;
 
 public class CameraCharacteristics_demo extends AppCompatActivity {
     private String TAG = "//-----CameraCharacteristics_demo-----//";
@@ -37,6 +38,8 @@ public class CameraCharacteristics_demo extends AppCompatActivity {
         try {
             T1_COLOR_CORRECTION_AVAILABLE_ABERRATION_MODES();
             T2_CONTROL_AE_AVAILABLE_ANTIBANDING_MODES();
+            T3_CONTROL_AE_AVAILABLE_MODES();
+            T4_CONTROL_AE_AVAILABLE_TARGET_FPS_RANGES();
         } catch (CameraAccessException e) {
             e.printStackTrace();
         }
@@ -75,7 +78,31 @@ public class CameraCharacteristics_demo extends AppCompatActivity {
         Log.d(TAG, "T2_CONTROL_AE_AVAILABLE_ANTIBANDING_MODES");
         for (int m : mode) {
             System.out.println(m);
-            if (m == CameraCharacteristics.CONTROL_AE_ANTIBANDING_MODE_AUTO) ;
+
+        }
+    }
+
+    /*
+    此相机设备支持的自动曝光模式列表。
+     */
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+    protected void T3_CONTROL_AE_AVAILABLE_MODES() {
+        int[] mode = cameraCharacteristics.get(CameraCharacteristics.CONTROL_AE_AVAILABLE_MODES);
+        Log.d(TAG, "T3_CONTROL_AE_AVAILABLE_MODES");
+        for (int m : mode) {
+            System.out.println(m);
+        }
+    }
+
+    /*
+    此摄像机设备支持的帧速率范围列表。
+     */
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+    protected void T4_CONTROL_AE_AVAILABLE_TARGET_FPS_RANGES() {
+        Range[] ranges = cameraCharacteristics.get(CameraCharacteristics.CONTROL_AE_AVAILABLE_TARGET_FPS_RANGES);
+        Log.d(TAG, "T4_CONTROL_AE_AVAILABLE_TARGET_FPS_RANGES");
+        for (Range r : ranges) {
+            System.out.println(r.toString());
         }
     }
 }
