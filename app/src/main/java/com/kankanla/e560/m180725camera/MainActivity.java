@@ -29,10 +29,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         switch (v.getId()) {
             case R.id.button1:
                 ((Button) v).setText("setTorchMode");
-                startActivity(new Intent(this,setTorchMode.class));
+                startActivity(new Intent(this, setTorchMode.class));
                 break;
             case R.id.button2:
-                ((Button) v).setText("22222");
+                ((Button) v).setText("CameraCharacteristics_demo");
+                startActivity(new Intent(this, CameraCharacteristics_demo.class));
                 break;
             case R.id.button3:
                 ((Button) v).setText("33333");

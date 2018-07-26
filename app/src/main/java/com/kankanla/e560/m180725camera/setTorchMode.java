@@ -18,7 +18,7 @@ import android.widget.Button;
 import android.widget.Toast;
 
 public class setTorchMode extends AppCompatActivity {
-    private String TAG = "setTorchMode";
+    private String TAG = "//-----setTorchMode-----//";
     private Boolean TorchONOFF = false;
     private CameraManager cameraManager;
     private CameraManager.TorchCallback torchCallback;
