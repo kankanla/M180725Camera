@@ -19,6 +19,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.util.Size;
 import android.view.Surface;
 import android.view.SurfaceHolder;
@@ -45,21 +46,47 @@ public class SurfaceView_demo extends AppCompatActivity {
             Manifest.permission.WRITE_EXTERNAL_STORAGE
     };
 
+    private boolean nasPermissionsGranted(String[] premissions) {
+        for (String temp : premissions) {
+            if (ActivityCompat.checkSelfPermission(this, temp) != PackageManager.PERMISSION_GRANTED) {
+                System.out.println("909090999999999999999999999999999999999999999999999999");
+                return false;
+            }
+        }
+        return true;
+    }
+
+    private void requestVideoPermissions(String[] ps) {
+        ActivityCompat.requestPermissions(this, VIDEO_PERMISSIONS, 22);
+    }
+
+
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        checkpermission();
         setContentView(R.layout.activity_surface_view_demo);
         setTitle(getLocalClassName());
         surfaceView = findViewById(R.id.surfaceView);
         surfaceHolder = surfaceView.getHolder();
-        try {
-            T1();
-        } catch (CameraAccessException e) {
-            e.printStackTrace();
+
+        if (nasPermissionsGranted(VIDEO_PERMISSIONS)) {
+            try {
+                T1();
+            } catch (CameraAccessException e) {
+                e.printStackTrace();
+            }
+        } else {
+            requestVideoPermissions(VIDEO_PERMISSIONS);
         }
     }
+
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+    @Override
+    protected void onResume() {
+        super.onResume();
+    }
+
 
     @Override
     protected void onPause() {
@@ -67,17 +94,20 @@ public class SurfaceView_demo extends AppCompatActivity {
         stopBackground_handler();
     }
 
-    protected void checkpermission() {
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
-            // TODO: Consider calling
-            //    ActivityCompat#requestPermissions
-            // here to request the missing permissions, and then overriding
-            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-            //                                          int[] grantResults)
-            // to handle the case where the user grants the permission. See the documentation
-            // for ActivityCompat#requestPermissions for more details.
-            ActivityCompat.requestPermissions(this, VIDEO_PERMISSIONS, 22);
-            return;
+
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == 22) {
+            try {
+                System.out.println("888888888888888888888888888888888888888888888888");
+
+                T1();
+            } catch (CameraAccessException e) {
+                e.printStackTrace();
+            }
+
         }
     }
 
@@ -183,14 +213,15 @@ public class SurfaceView_demo extends AppCompatActivity {
     }
 
     private void stopBackground_handler() {
-        handlerThread.quitSafely();
-        try {
-            handlerThread.join();
-            handlerThread = null;
-            Background_handler = null;
-        } catch (InterruptedException e) {
-            e.printStackTrace();
+        if (handlerThread != null) {
+            handlerThread.quitSafely();
+            try {
+                handlerThread.join();
+                handlerThread = null;
+                Background_handler = null;
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
         }
-
     }
 }
