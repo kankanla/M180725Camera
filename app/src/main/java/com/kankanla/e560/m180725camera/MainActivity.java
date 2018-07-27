@@ -36,7 +36,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 startActivity(new Intent(this, CameraCharacteristics_demo.class));
                 break;
             case R.id.button3:
-                ((Button) v).setText("33333");
+                ((Button) v).setText("activity_surface_view_demo");
+                startActivity(new Intent(this, SurfaceView_demo.class));
                 break;
             case R.id.button4:
                 ((Button) v).setText("44444");
