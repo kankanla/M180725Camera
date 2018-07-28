@@ -44,7 +44,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 startActivity(new Intent(this, SurfaceView_demo2.class));
                 break;
             case R.id.button5:
-                ((Button) v).setText("22222");
+                ((Button) v).setText("TextureView_demo");
+                startActivity(new Intent(this, TextureView_demo.class));
                 break;
             case R.id.button6:
                 ((Button) v).setText("22222");
