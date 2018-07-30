@@ -215,7 +215,10 @@ public class SurfaceView_demo2 extends AppCompatActivity {
         super.onPause();
         Log.d(TAG, "onPause");
         mCameraOpenCloseLock.release();
-        mCameraCaptureSession.close();
+        mCameraOpenCloseLock.isFair();
+        if (mCameraCaptureSession != null) {
+            mCameraCaptureSession.close();
+        }
         mCameraManager = null;
     }
 
@@ -225,7 +228,6 @@ public class SurfaceView_demo2 extends AppCompatActivity {
         Log.d(TAG, "onDestroy");
         mCameraOpenCloseLock.release();
         mCameraManager = null;
-
     }
 
     private void startBackgroundThread() {

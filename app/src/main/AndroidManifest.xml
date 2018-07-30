@@ -24,7 +24,8 @@
         <activity android:name=".CameraCharacteristics_demo" />
         <activity android:name=".SurfaceView_demo" />
         <activity android:name=".SurfaceView_demo2" />
-        <activity android:name=".TextureView_demo"></activity>
+        <activity android:name=".TextureView_demo" />
+        <activity android:name=".RectFandMatrix_demo"></activity>
     </application>
 
 </manifest>
