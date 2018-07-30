@@ -25,7 +25,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onClick(View v) {
-        Toast.makeText(this, String.valueOf(v.getId()), Toast.LENGTH_SHORT).show();
         switch (v.getId()) {
             case R.id.button1:
                 ((Button) v).setText("setTorchMode");

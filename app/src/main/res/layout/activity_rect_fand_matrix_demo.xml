@@ -9,5 +9,14 @@
     <SurfaceView
         android:id="@+id/surfaceView222"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="248dp"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintBottom_toBottomOf="@+id/textureView222" />
+
+    <TextureView
+        android:id="@+id/textureView222"
+        android:layout_width="match_parent"
+        android:layout_height="241dp"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteY="270dp" />
 </android.support.constraint.ConstraintLayout>
