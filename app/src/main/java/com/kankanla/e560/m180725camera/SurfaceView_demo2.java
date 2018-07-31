@@ -108,6 +108,7 @@ public class SurfaceView_demo2 extends AppCompatActivity {
         public void onOpened(@NonNull final CameraDevice camera) {
             Log.d(TAG, "mCameraStateCallback");
             mCameraDevice = camera;
+
             try {
                 mCameraDevice.createCaptureSession(Arrays.asList(mSurface), new CameraCaptureSession.StateCallback() {
                     @Override
@@ -171,7 +172,6 @@ public class SurfaceView_demo2 extends AppCompatActivity {
             }
             mCameraManager = (CameraManager) getApplicationContext().getSystemService(CAMERA_SERVICE);
             mSurfaceView = findViewById(R.id.surfaceView2);
-
             mGetCameraIdList = mCameraManager.getCameraIdList();
             CameraCharacteristics mCameraCharacteristics = mCameraManager.getCameraCharacteristics(mGetCameraIdList[0]);
             mStreamConfigurationMap = mCameraCharacteristics.get(CameraCharacteristics.SCALER_STREAM_CONFIGURATION_MAP);

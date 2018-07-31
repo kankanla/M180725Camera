@@ -47,6 +47,7 @@ public class RectFandMatrix_demo extends AppCompatActivity {
         setTitle(TAG);
         textureViewM = findViewById(R.id.textureView222);
         surfaceViewM = findViewById(R.id.surfaceView222);
+        surfaceViewM.setRotation(90);
         button2222 = findViewById(R.id.button222);
         button2222.setOnClickListener(new View.OnClickListener() {
             @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
@@ -228,6 +229,7 @@ public class RectFandMatrix_demo extends AppCompatActivity {
         };
         CameraManager cameraManager = (CameraManager) getSystemService(CAMERA_SERVICE);
         cameraManager.openCamera("0", CDcallback, handler);
+
     }
 
 
