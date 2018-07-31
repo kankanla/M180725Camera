@@ -12,12 +12,12 @@ import android.hardware.camera2.CaptureRequest;
 import android.hardware.camera2.CaptureResult;
 import android.hardware.camera2.TotalCaptureResult;
 import android.os.Build;
+import android.os.Bundle;
 import android.os.Handler;
 import android.os.HandlerThread;
 import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.util.Log;
 import android.view.Surface;
 import android.view.SurfaceHolder;
@@ -47,7 +47,7 @@ public class RectFandMatrix_demo extends AppCompatActivity {
         setTitle(TAG);
         textureViewM = findViewById(R.id.textureView222);
         surfaceViewM = findViewById(R.id.surfaceView222);
-        button2222 = findViewById(R.id.button16);
+        button2222 = findViewById(R.id.button222);
         button2222.setOnClickListener(new View.OnClickListener() {
             @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
             @Override
