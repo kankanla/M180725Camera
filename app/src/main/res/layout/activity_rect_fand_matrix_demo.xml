@@ -1,22 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".RectFandMatrix_demo">
 
     <SurfaceView
         android:id="@+id/surfaceView222"
         android:layout_width="match_parent"
-        android:layout_height="248dp"
-        android:layout_marginBottom="8dp"
-        app:layout_constraintBottom_toBottomOf="@+id/textureView222" />
+        android:layout_height="match_parent"
+        android:layout_weight="3" />
 
     <TextureView
         android:id="@+id/textureView222"
         android:layout_width="match_parent"
-        android:layout_height="241dp"
-        tools:ignore="MissingConstraints"
-        tools:layout_editor_absoluteY="270dp" />
-</android.support.constraint.ConstraintLayout>
+        android:layout_height="match_parent"
+        android:layout_weight="3" />
+
+    <Button
+        android:id="@+id/button222"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="5"
+        android:text="button222" />
+</LinearLayout>
