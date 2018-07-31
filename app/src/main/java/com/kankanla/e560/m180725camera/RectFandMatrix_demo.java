@@ -47,7 +47,7 @@ public class RectFandMatrix_demo extends AppCompatActivity {
         setTitle(TAG);
         textureViewM = findViewById(R.id.textureView222);
         surfaceViewM = findViewById(R.id.surfaceView222);
-        button2222 = findViewById(R.id.button222);
+        button2222 = findViewById(R.id.button16);
         button2222.setOnClickListener(new View.OnClickListener() {
             @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
             @Override
