@@ -2,6 +2,7 @@ package com.kankanla.e560.m180725camera;
 
 import android.annotation.SuppressLint;
 import android.graphics.Matrix;
+import android.graphics.RectF;
 import android.graphics.SurfaceTexture;
 import android.hardware.camera2.CameraAccessException;
 import android.hardware.camera2.CameraCaptureSession;
@@ -47,7 +48,8 @@ public class RectFandMatrix_demo extends AppCompatActivity {
         setTitle(TAG);
         textureViewM = findViewById(R.id.textureView222);
         surfaceViewM = findViewById(R.id.surfaceView222);
-        surfaceViewM.setRotation(90);
+        surfaceViewM.setRotation(0);
+
         button2222 = findViewById(R.id.button222);
         button2222.setOnClickListener(new View.OnClickListener() {
             @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
@@ -116,10 +118,13 @@ public class RectFandMatrix_demo extends AppCompatActivity {
         textureViewM.setSurfaceTextureListener(surfaceTextureListener);
         surfaceHolderM = surfaceViewM.getHolder();
         surfaceHolderM.addCallback(callback);
+
+
     }
 
     protected void T1() {
         Matrix matrix = new Matrix();
+        RectF rectF = new RectF();
     }
 
 
