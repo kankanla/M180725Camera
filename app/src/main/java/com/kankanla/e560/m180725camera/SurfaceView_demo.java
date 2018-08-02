@@ -24,6 +24,8 @@ import android.util.Size;
 import android.view.Surface;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
+import android.view.View;
+import android.widget.Button;
 
 import java.util.ArrayList;
 
@@ -69,6 +71,17 @@ public class SurfaceView_demo extends AppCompatActivity {
         setTitle(getLocalClassName());
         surfaceView = findViewById(R.id.surfaceView);
         surfaceHolder = surfaceView.getHolder();
+        Button button = findViewById(R.id.button333);
+
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                System.out.println("ccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc");
+                surfaceHolder.addCallback(surfaceHolder_callback);
+
+
+            }
+        });
 
         if (nasPermissionsGranted(VIDEO_PERMISSIONS)) {
             try {
@@ -79,7 +92,10 @@ public class SurfaceView_demo extends AppCompatActivity {
         } else {
             requestVideoPermissions(VIDEO_PERMISSIONS);
         }
+
+
     }
+
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
