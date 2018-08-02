@@ -119,7 +119,11 @@ public class SurfaceView_demo extends AppCompatActivity {
         cameraCharacteristics = cameraManager.getCameraCharacteristics(cameraIdList[0]);
         streamConfigurationMap = cameraCharacteristics.get(CameraCharacteristics.SCALER_STREAM_CONFIGURATION_MAP);
         startBackground_handler();
+
+        SurfaceHolder xx = surfaceView.getHolder();
+
         surfaceHolder.addCallback(surfaceHolder_callback);
+
     }
 
     private SurfaceHolder.Callback surfaceHolder_callback = new SurfaceHolder.Callback() {

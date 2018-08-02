@@ -167,8 +167,10 @@ public class RectFandMatrix_demo extends AppCompatActivity {
 
                             try {
                                 CaptureRequest.Builder builder = cameraDevice.createCaptureRequest(CameraDevice.TEMPLATE_PREVIEW);
+
                                 builder.addTarget(surfaceM);
                                 builder.addTarget(surfaceMM);
+
                                 session.setRepeatingRequest(builder.build(), new CameraCaptureSession.CaptureCallback() {
                                     @SuppressLint("LongLogTag")
                                     @Override
