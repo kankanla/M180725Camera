@@ -20,6 +20,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.util.Size;
 import android.view.Surface;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
@@ -33,14 +34,17 @@ import java.util.List;
 
 public class RectFandMatrix_demo extends AppCompatActivity {
 
-    private final String TAG = "-aaa-RectFandMatrix_demo-";
+    private final String TAG = "-aaa-RectFandMatrix-";
+    private final String TAG2 = "--bbb--";
     private TextureView textureViewM;
     private Surface surfaceM;
     private SurfaceView surfaceViewM;
     private SurfaceHolder surfaceHolderM;
     private Surface surfaceMM;
     private Button button2222;
+    private Size vs;
 
+    @SuppressLint("LongLogTag")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,14 +52,15 @@ public class RectFandMatrix_demo extends AppCompatActivity {
         setTitle(TAG);
         textureViewM = findViewById(R.id.textureView222);
         surfaceViewM = findViewById(R.id.surfaceView222);
-        surfaceViewM.setRotation(0);
 
+        Log.d(TAG2, TAG);
         button2222 = findViewById(R.id.button222);
         button2222.setOnClickListener(new View.OnClickListener() {
             @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
             @Override
             public void onClick(View v) {
                 try {
+                    Log.d(TAG, "setOnClickListener");
                     ck();
                 } catch (CameraAccessException e) {
                     e.printStackTrace();
@@ -70,6 +75,14 @@ public class RectFandMatrix_demo extends AppCompatActivity {
         public void onSurfaceTextureAvailable(SurfaceTexture surface, int width, int height) {
             Log.d(TAG, "surfaceTextureListener");
             surfaceM = new Surface(surface);
+
+            Matrix matrix = new Matrix();
+            RectF rectf = new RectF();
+            rectf.set(0, 0, textureViewM.getWidth(), textureViewM.getHeight());
+            float x = rectf.centerX();
+            float y = rectf.centerY();
+            matrix.setRotate(30, x, y);
+            textureViewM.setTransform(matrix);
 
         }
 
@@ -96,7 +109,7 @@ public class RectFandMatrix_demo extends AppCompatActivity {
         public void surfaceCreated(SurfaceHolder holder) {
             Log.d(TAG, "SurfaceHolder.Callback");
             surfaceMM = holder.getSurface();
-
+            surfaceViewM.setRotation(90);
         }
 
         @Override
@@ -115,11 +128,10 @@ public class RectFandMatrix_demo extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        Log.d(TAG, "onResume");
         textureViewM.setSurfaceTextureListener(surfaceTextureListener);
         surfaceHolderM = surfaceViewM.getHolder();
         surfaceHolderM.addCallback(callback);
-
-
     }
 
     protected void T1() {
