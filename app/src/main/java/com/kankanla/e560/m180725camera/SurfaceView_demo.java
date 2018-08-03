@@ -51,7 +51,6 @@ public class SurfaceView_demo extends AppCompatActivity {
     private boolean nasPermissionsGranted(String[] premissions) {
         for (String temp : premissions) {
             if (ActivityCompat.checkSelfPermission(this, temp) != PackageManager.PERMISSION_GRANTED) {
-                System.out.println("909090999999999999999999999999999999999999999999999999");
                 return false;
             }
         }
@@ -72,14 +71,12 @@ public class SurfaceView_demo extends AppCompatActivity {
         surfaceView = findViewById(R.id.surfaceView);
         surfaceHolder = surfaceView.getHolder();
         Button button = findViewById(R.id.button333);
-
+        startBackground_handler();
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 System.out.println("ccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc");
                 surfaceHolder.addCallback(surfaceHolder_callback);
-
-
             }
         });
 
@@ -92,8 +89,6 @@ public class SurfaceView_demo extends AppCompatActivity {
         } else {
             requestVideoPermissions(VIDEO_PERMISSIONS);
         }
-
-
     }
 
 
@@ -117,8 +112,6 @@ public class SurfaceView_demo extends AppCompatActivity {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         if (requestCode == 22) {
             try {
-                System.out.println("888888888888888888888888888888888888888888888888");
-
                 T1();
             } catch (CameraAccessException e) {
                 e.printStackTrace();
@@ -134,10 +127,7 @@ public class SurfaceView_demo extends AppCompatActivity {
         cameraIdList = cameraManager.getCameraIdList();
         cameraCharacteristics = cameraManager.getCameraCharacteristics(cameraIdList[0]);
         streamConfigurationMap = cameraCharacteristics.get(CameraCharacteristics.SCALER_STREAM_CONFIGURATION_MAP);
-        startBackground_handler();
-
-        SurfaceHolder xx = surfaceView.getHolder();
-
+//        startBackground_handler();
         surfaceHolder.addCallback(surfaceHolder_callback);
 
     }
