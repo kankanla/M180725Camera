@@ -117,6 +117,8 @@ public class SurfaceView_demo2 extends AppCompatActivity {
                         try {
                             CaptureRequest.Builder builder = mCameraDevice.createCaptureRequest(CameraDevice.TEMPLATE_PREVIEW);
                             builder.addTarget(mSurface);
+                            builder.set(CaptureRequest.JPEG_ORIENTATION, 180);
+                            mSurfaceView.setRotation(90);
                             Log.d(TAG, mSurface.isValid() + "-----------------------------------------");
                             mCameraCaptureSession.setRepeatingRequest(builder.build(), new CameraCaptureSession.CaptureCallback() {
                                 @Override

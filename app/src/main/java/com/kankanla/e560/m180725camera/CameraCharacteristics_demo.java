@@ -1,16 +1,12 @@
 package com.kankanla.e560.m180725camera;
 
-import android.annotation.SuppressLint;
+import android.annotation.TargetApi;
 import android.hardware.camera2.CameraAccessException;
-import android.hardware.camera2.CameraCaptureSession;
 import android.hardware.camera2.CameraCharacteristics;
-import android.hardware.camera2.CameraDevice;
 import android.hardware.camera2.CameraManager;
 import android.hardware.camera2.CameraMetadata;
-import android.hardware.camera2.CaptureRequest;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -26,7 +22,6 @@ public class CameraCharacteristics_demo extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Log.d(TAG, "onCreate");
         setContentView(R.layout.activity_camera_characteristics_demo);
         setTitle(getLocalClassName());
         cameraManager = (CameraManager) getSystemService(CAMERA_SERVICE);
@@ -41,19 +36,27 @@ public class CameraCharacteristics_demo extends AppCompatActivity {
         }
 
 
-//        try {
-//            T1_COLOR_CORRECTION_AVAILABLE_ABERRATION_MODES();
-//            T2_CONTROL_AE_AVAILABLE_ANTIBANDING_MODES();
-//            T3_CONTROL_AE_AVAILABLE_MODES();
-//            T4_CONTROL_AE_AVAILABLE_TARGET_FPS_RANGES();
-//        } catch (CameraAccessException e) {
-//            e.printStackTrace();
-//        }
+        try {
+            T1_COLOR_CORRECTION_AVAILABLE_ABERRATION_MODES();
+            T2_CONTROL_AE_AVAILABLE_ANTIBANDING_MODES();
+            T3_CONTROL_AE_AVAILABLE_MODES();
+            T4_CONTROL_AE_AVAILABLE_TARGET_FPS_RANGES();
+            T5_LENS_POSE_ROTATION();
+        } catch (CameraAccessException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+    @Override
+    protected void onResume() {
+        super.onResume();
+        T5_LENS_POSE_ROTATION();
     }
 
     /*
-    该相机设备支持的像差校正模式列表。
-     */
+        该相机设备支持的像差校正模式列表。
+         */
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     protected void T1_COLOR_CORRECTION_AVAILABLE_ABERRATION_MODES() throws CameraAccessException {
         int[] modes = cameraCharacteristics.get(CameraCharacteristics.COLOR_CORRECTION_AVAILABLE_ABERRATION_MODES);
@@ -112,90 +115,21 @@ public class CameraCharacteristics_demo extends AppCompatActivity {
         }
     }
 
-    /*
-
-     */
-    @SuppressLint("MissingPermission")
+    @TargetApi(Build.VERSION_CODES.M)
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
-    protected void T5_X() throws CameraAccessException {
-        Integer integer = cameraCharacteristics.get(CameraCharacteristics.SENSOR_ORIENTATION);
-        int jjj = this.getWindowManager().getDefaultDisplay().getRotation();
-        Log.d(TAG, integer + "---SENSOR_ORIENTATION---");
-        Log.d(TAG, jjj + "---getDefaultDisplay---");
-        cameraManager.openCamera(cameraIdList[0], new CameraDevice.StateCallback() {
-            @Override
-            public void onOpened(@NonNull final CameraDevice camera) {
-                try {
-                    camera.createCaptureSession(null, new CameraCaptureSession.StateCallback() {
-                        @Override
-                        public void onConfigured(@NonNull CameraCaptureSession session) {
-                            try {
-                                CaptureRequest.Builder builder = camera.createCaptureRequest(CameraDevice.TEMPLATE_MANUAL);
+    protected void T5_LENS_POSE_ROTATION() {
 
-//                                builder.set(camera);
+        System.out.println("T5_LENS_POSE_ROTATION-----------------------T5_LENS_POSE_ROTATION");
+        System.out.println(cameraCharacteristics.get(CameraCharacteristics.LENS_POSE_ROTATION));
+        System.out.println(cameraCharacteristics.get(CameraCharacteristics.LENS_POSE_TRANSLATION));
+        System.out.println(cameraCharacteristics.get(CameraCharacteristics.SENSOR_ORIENTATION));
+        System.out.println("T5_LENS_POSE_ROTATION----======================----T5_LENS_POSE_ROTATION");
 
-
-                            } catch (CameraAccessException e) {
-                                e.printStackTrace();
-                            }
-                        }
-
-                        @Override
-                        public void onConfigureFailed(@NonNull CameraCaptureSession session) {
-
-                        }
-                    },null);
-                } catch (CameraAccessException e) {
-                    e.printStackTrace();
-                }
-            }
-
-            @Override
-            public void onDisconnected(@NonNull CameraDevice camera) {
-
-            }
-
-            @Override
-            public void onError(@NonNull CameraDevice camera, int error) {
-
-            }
-        },null);
+//        float[] f = cameraCharacteristics.get(CameraCharacteristics.LENS_POSE_ROTATION);
+//        for (float ff : f) {
+//            System.out.println(ff + "---------////////////////////////");
+//        }
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
-    @Override
-    protected void onResume() {
-        super.onResume();
-        Log.d(TAG, "onResume");
-        try {
-            T5_X();
-        } catch (CameraAccessException e) {
-            e.printStackTrace();
-        }
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-        Log.d(TAG, "onStart");
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        Log.d(TAG, "onPause");
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        Log.d(TAG, "onDestroy");
-    }
-
-    @Override
-    protected void onRestart() {
-        super.onRestart();
-        Log.d(TAG, "onRestart");
-    }
 
 }

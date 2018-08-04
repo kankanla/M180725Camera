@@ -167,9 +167,10 @@ public class RectFandMatrix_demo extends AppCompatActivity {
 
                             try {
                                 CaptureRequest.Builder builder = cameraDevice.createCaptureRequest(CameraDevice.TEMPLATE_PREVIEW);
-
                                 builder.addTarget(surfaceM);
                                 builder.addTarget(surfaceMM);
+//                                builder.set(CaptureRequest.JPEG_ORIENTATION, 0);
+//                                surfaceViewM.setRotation(180);
 
                                 session.setRepeatingRequest(builder.build(), new CameraCaptureSession.CaptureCallback() {
                                     @SuppressLint("LongLogTag")
@@ -248,7 +249,6 @@ public class RectFandMatrix_demo extends AppCompatActivity {
         };
         CameraManager cameraManager = (CameraManager) getSystemService(CAMERA_SERVICE);
         cameraManager.openCamera("0", CDcallback, handler);
-
     }
 
 
@@ -268,4 +268,6 @@ public class RectFandMatrix_demo extends AppCompatActivity {
         handlerThread.start();
         handler = new Handler(handlerThread.getLooper());
     }
+
+
 }
