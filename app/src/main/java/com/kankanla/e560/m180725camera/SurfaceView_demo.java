@@ -155,11 +155,60 @@ public class SurfaceView_demo extends AppCompatActivity {
         }
     };
 
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+    private CaptureRequest.Builder m_CaptureRequest_Builder() {
+        Log.d(TAG, "m_CaptureRequest_Builder()");
+        CaptureRequest.Builder builder = null;
+        try {
+            builder = m_cameraDevice.createCaptureRequest(CameraDevice.TEMPLATE_PREVIEW);
+        } catch (CameraAccessException e) {
+            e.printStackTrace();
+        }
+        builder.addTarget(m_surfaceHolder.getSurface());
+        return builder;
+    }
+
+    /*
+
+    2018/8/8
+
+     */
+
+
+
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+    private void XY() {
+//        m_streamConfigurationMap
+        int x = m_cameraCharacteristics.get(CameraCharacteristics.SENSOR_ORIENTATION);
+
+        System.out.println("---------------------------------------------------------");
+        Log.d(TAG2, "         " + x + "        ");
+        Log.d(TAG, "         " + x + "        ");
+        System.out.println("---------------------------------------------------------");
+
+
+
+    }
+
+
+
+
+    /*
+
+     */
     private CameraCaptureSession.StateCallback m_CameraCaptureSession_StateCallback = new CameraCaptureSession.StateCallback() {
+        @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
         @Override
         public void onConfigured(@NonNull CameraCaptureSession session) {
             Log.d(TAG, "m_CameraCaptureSession_StateCallback   onConfigured");
-
+            m_cameraCaptureSession = session;
+            CaptureRequest.Builder builder = m_CaptureRequest_Builder();
+            try {
+                XY();
+                m_cameraCaptureSession.setRepeatingRequest(builder.build(), null, m_back_handler);
+            } catch (CameraAccessException e) {
+                e.printStackTrace();
+            }
         }
 
         @Override
