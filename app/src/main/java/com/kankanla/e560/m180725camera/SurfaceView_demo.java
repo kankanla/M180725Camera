@@ -3,7 +3,9 @@ package com.kankanla.e560.m180725camera;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
+import android.graphics.PixelFormat;
 import android.hardware.camera2.CameraAccessException;
 import android.hardware.camera2.CameraCaptureSession;
 import android.hardware.camera2.CameraCharacteristics;
@@ -45,6 +47,7 @@ public class SurfaceView_demo extends AppCompatActivity {
     private Button m_button;
     private CameraDevice m_cameraDevice;
     private CaptureRequest m_captureRequest;
+    private CaptureRequest.Builder m_CaptureRequest_Builder;
     private CameraCaptureSession m_cameraCaptureSession;
     private CameraManager m_cameraManager;
     private String[] m_cameraIDS;
@@ -160,7 +163,7 @@ public class SurfaceView_demo extends AppCompatActivity {
         Log.d(TAG, "m_CaptureRequest_Builder()");
         CaptureRequest.Builder builder = null;
         try {
-            builder = m_cameraDevice.createCaptureRequest(CameraDevice.TEMPLATE_PREVIEW);
+            builder = m_cameraDevice.createCaptureRequest(CameraDevice.TEMPLATE_RECORD);
         } catch (CameraAccessException e) {
             e.printStackTrace();
         }
@@ -175,22 +178,32 @@ public class SurfaceView_demo extends AppCompatActivity {
      */
 
 
-
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     private void XY() {
 //        m_streamConfigurationMap
         int x = m_cameraCharacteristics.get(CameraCharacteristics.SENSOR_ORIENTATION);
+        Log.d(TAG, "------------------------------------------------");
+        switch (getWindowManager().getDefaultDisplay().getRotation()) {
+            case Surface.ROTATION_0:
+                Log.d(TAG, "Surface.ROTATION_0");
+                break;
+            case Surface.ROTATION_90:
+                Log.d(TAG, "Surface.ROTATION_90");
+                break;
+            case Surface.ROTATION_180:
+                Log.d(TAG, "Surface.ROTATION_180");
+                break;
+            case Surface.ROTATION_270:
+                Log.d(TAG, "Surface.ROTATION_270");
+                break;
+        }
 
-        System.out.println("---------------------------------------------------------");
-        Log.d(TAG2, "         " + x + "        ");
-        Log.d(TAG, "         " + x + "        ");
-        System.out.println("---------------------------------------------------------");
-
+        Log.d(TAG2, "    x     " + x + "        ");
+        Log.d(TAG, "     x    " + x + "        ");
+        Log.d(TAG, "------------------------------------------------");
 
 
     }
-
-
 
 
     /*
@@ -201,11 +214,12 @@ public class SurfaceView_demo extends AppCompatActivity {
         @Override
         public void onConfigured(@NonNull CameraCaptureSession session) {
             Log.d(TAG, "m_CameraCaptureSession_StateCallback   onConfigured");
+            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
             m_cameraCaptureSession = session;
-            CaptureRequest.Builder builder = m_CaptureRequest_Builder();
+            m_CaptureRequest_Builder = m_CaptureRequest_Builder();
             try {
                 XY();
-                m_cameraCaptureSession.setRepeatingRequest(builder.build(), null, m_back_handler);
+                m_cameraCaptureSession.setRepeatingRequest(m_CaptureRequest_Builder.build(), null, m_back_handler);
             } catch (CameraAccessException e) {
                 e.printStackTrace();
             }
@@ -258,46 +272,46 @@ public class SurfaceView_demo extends AppCompatActivity {
         }
 
         m_cameraManager = (CameraManager) getSystemService(CAMERA_SERVICE);
-        try {
-            if (!m_camera_semaphore.tryAcquire(2500, TimeUnit.MILLISECONDS)) {
-                throw new RuntimeException("Time out waiting to lock camera opening.");
+        m_surfaceView.getHolder().addCallback(new SurfaceHolder.Callback() {
+            @Override
+            public void surfaceCreated(SurfaceHolder holder) {
+                Log.d(TAG, "getHolder().addCallback  surfaceCreated");
+                m_surfaceHolder = holder;
             }
-            m_surfaceView.getHolder().addCallback(new SurfaceHolder.Callback() {
-                @Override
-                public void surfaceCreated(SurfaceHolder holder) {
-                    Log.d(TAG, "getHolder().addCallback  surfaceCreated");
-                    m_surfaceHolder = holder;
-                    try {
-                        m_cameraIDS = m_cameraManager.getCameraIdList();
-                        Range<Integer> id = new Range<>(0, m_cameraIDS.length - 1);
-                        m_cameraCharacteristics = m_cameraManager.getCameraCharacteristics(m_cameraIDS[id.clamp(Camera_ID)]);
-                        m_streamConfigurationMap = m_cameraCharacteristics.get(CameraCharacteristics.SCALER_STREAM_CONFIGURATION_MAP);
-                        getSurfe_size();
-                        m_cameraManager.openCamera(m_cameraIDS[id.clamp(Camera_ID)], m_CameraDevice_stateCallback, m_back_handler);
-                    } catch (CameraAccessException e) {
-                        e.printStackTrace();
-                    }
-                }
 
-                @Override
-                public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {
-                    Log.d(TAG, "getHolder().addCallback  surfaceChanged");
-                }
+            @Override
+            public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {
+                Log.d(TAG, "getHolder().addCallback  surfaceChanged");
+                Log.d(TAG, "-format---" + format + "-width---" + width + "-height---" + height);
+                m_surfaceHolder.setFormat(PixelFormat.RGB_565);
+                try {
+                    m_cameraIDS = m_cameraManager.getCameraIdList();
+                    Range<Integer> id = new Range<>(0, m_cameraIDS.length - 1);
+                    m_cameraCharacteristics = m_cameraManager.getCameraCharacteristics(m_cameraIDS[id.clamp(Camera_ID)]);
+                    m_streamConfigurationMap = m_cameraCharacteristics.get(CameraCharacteristics.SCALER_STREAM_CONFIGURATION_MAP);
+                    getSurfe_size();
 
-                @Override
-                public void surfaceDestroyed(SurfaceHolder holder) {
-                    Log.d(TAG, "getHolder().addCallback  surfaceDestroyed");
+                    m_cameraManager.openCamera(m_cameraIDS[id.clamp(Camera_ID)], m_CameraDevice_stateCallback, m_back_handler);
+                } catch (CameraAccessException e) {
+                    e.printStackTrace();
                 }
-            });
-        } catch (InterruptedException e) {
-            Log.d(TAG2, "tryAcquire");
-            e.printStackTrace();
-        }
+            }
+
+            @Override
+            public void surfaceDestroyed(SurfaceHolder holder) {
+                Log.d(TAG, "getHolder().addCallback  surfaceDestroyed");
+            }
+        });
     }
 
     protected void start_back_handle() {
         Log.d(TAG, "start_back_handle");
         stop_back_handle();
+        try {
+            m_camera_semaphore.tryAcquire(2000, TimeUnit.MINUTES);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         if (m_back_handlerThread != null) {
             Log.d(TAG, "start_back_handle return");
             return;
@@ -309,13 +323,22 @@ public class SurfaceView_demo extends AppCompatActivity {
 
     protected void stop_back_handle() {
         Log.d(TAG, "stop_back_handle");
+        m_camera_semaphore.release();
+        if (null != m_cameraDevice) {
+            Log.d(TAG, "m_cameraDevice.close()");
+            m_cameraDevice.close();
+        }
+
+        if (m_cameraCaptureSession != null) {
+            m_cameraCaptureSession.close();
+        }
+
         if (m_back_handler != null || m_back_handlerThread != null) {
             m_back_handlerThread.quitSafely();
             m_back_handlerThread = null;
             m_back_handler = null;
         }
     }
-
 
     protected boolean chk_SelfPermission(String[] Permissions) {
         Log.d(TAG, "chk_SelfPermission");
@@ -353,6 +376,7 @@ public class SurfaceView_demo extends AppCompatActivity {
     protected void onPause() {
         super.onPause();
         Log.d(TAG, "onPause");
+        stop_back_handle();
     }
 
     @Override
