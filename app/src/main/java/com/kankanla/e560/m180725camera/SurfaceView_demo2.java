@@ -183,6 +183,7 @@ public class SurfaceView_demo2 extends AppCompatActivity {
             mSurfaceView.getHolder().addCallback(new SurfaceHolder.Callback() {
                 @Override
                 public void surfaceCreated(SurfaceHolder holder) {
+                    Log.d(TAG, "surfaceCreated");
                     mSurfaceHolder = holder;
                     mSurface = mSurfaceHolder.getSurface();
                     try {
@@ -194,13 +195,15 @@ public class SurfaceView_demo2 extends AppCompatActivity {
 
                 @Override
                 public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {
+                    Log.d(TAG, "surfaceChanged");
                     mSurfaceHolder = holder;
                     mSurface = mSurfaceHolder.getSurface();
                 }
 
                 @Override
                 public void surfaceDestroyed(SurfaceHolder holder) {
-                    mSurfaceHolder = holder;
+                    Log.d(TAG, "surfaceDestroyed");
+
                 }
             });
 

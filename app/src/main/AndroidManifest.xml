@@ -26,7 +26,8 @@
         <activity android:name=".SurfaceView_demo2" />
         <activity android:name=".TextureView_demo" />
         <activity android:name=".RectFandMatrix_demo" />
-        <activity android:name=".View_demo"></activity>
+        <activity android:name=".View_demo" />
+        <activity android:name=".TextureView_demo2"></activity>
     </application>
 
 </manifest>

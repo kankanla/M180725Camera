@@ -48,10 +48,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.button6:
                 ((Button) v).setText("RectFandMatrix_demo");
                 startActivity(new Intent(this, RectFandMatrix_demo.class));
-
                 break;
             case R.id.button7:
-                ((Button) v).setText("22222");
+                ((Button) v).setText("TextureView_demo2");
+                startActivity(new Intent(this, TextureView_demo2.class));
                 break;
             case R.id.button8:
                 ((Button) v).setText("22222");
